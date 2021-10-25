@@ -2,4 +2,5 @@
 .github
 Documentation
 Screenshots
-
+Dockerfile
+.dockerignore
