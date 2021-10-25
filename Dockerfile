@@ -1,4 +1,4 @@
-# suggested usage: docker build --rm -t elks-dist:latest . && docker run -it --name elks-dist elks-dist:latest
+# suggested usage: docker build --rm -t elks-dist:latest . && mkdir -p /tmp/elksbootfs && docker run -it --name elks-dist --mount type=bind,source=/tmp/elksbootfs,target=/elks/bootfs elks-dist:latest
 FROM ubuntu:20.04
 ENTRYPOINT ["bash"]
 # install required tools, make non-root user and switch to it
@@ -35,10 +35,6 @@ RUN mkdir -p "cross" \
 # run the rest of the build interactively from step 3: https://github.com/jbruchon/elks/blob/master/BUILD.md
 # . ./env.sh
 # make menuconfig
-# make all
+# make all IMG_DIR=/elks/bootfs
 
-# tarball the results and copy them out of the container
-# cd image && tar -cvzf binfiles.tar.gz *.bin
-
-# outside the container, on the host
-# docker cp elks-dist:/elks/image/binfiles.tar.gz .
+# outside the container, on the host, the bootfs images be in /tmp/elksbootfs
